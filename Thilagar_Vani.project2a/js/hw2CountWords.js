@@ -19,9 +19,13 @@
 	    //Use a regular expression to split at 1 or more spaces. 
 	    //trim() gets rid of the case when a trailing space is counted as a new word
 	    //Hoping I'll get my extra credit!!!
-	    var wordArray = myTextareaElement.value.trim().split(/\s+/);
-	    console.log(wordArray);
-	    var wordCount = wordArray.length;
-
+	    var wordCount=0;
+	    var textStr = myTextareaElement.value.trim();
+	    if (textStr.length > 0)
+	    {
+		    var wordArray = textStr.split(/\s+/);
+		    //console.log(wordArray);
+		    wordCount = wordArray.length;
+	    }
 		document.getElementById("wordcount").innerHTML = wordCount;
-	}
+	};

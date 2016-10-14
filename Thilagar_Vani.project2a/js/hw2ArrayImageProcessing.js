@@ -51,6 +51,20 @@
  **/
 function makeBlue(original, output){
       // YOUR CODE GOES HERE
+      for(var i=0; i < original.length; i++)
+      {
+        var modval = i%4;
+        //set the red and green to 0
+        if (modval ==0 || modval== 1 )
+        {
+          output[i] = 0;
+        }
+        else
+        {
+          output[i] = original[i];
+        }
+      }
+      return;
 }
 
 /*
@@ -67,6 +81,21 @@ function makeBlue(original, output){
  **/
 function makeReverse(original, output){
       // YOUR CODE GOES HERE
+      for(var i=0; i < original.length; i++)
+      {
+        var modval = i%4;
+        //invert the r,g,b
+        if (modval != 3 )
+        {
+          output[i] = 255-original[i];
+        }
+        else
+        {
+          //leave the alpha the same
+          output[i] = original[i];
+        }
+      }
+      return;
 }
 
 /*
@@ -83,6 +112,21 @@ function makeReverse(original, output){
 
 function makeTransparent(original,output){
       // YOUR CODE GOES HERE
+      for(var i=0; i < original.length; i++)
+      {
+        var modval = i%4;
+        //halve the transparency
+        if (modval == 3 )
+        {
+          output[i] = original[i]/2;
+        }
+        else
+        {
+          //leave the colors the same
+          output[i] = original[i];
+        }
+      }
+      return;
 }
 
 /*
@@ -103,4 +147,12 @@ function makeTransparent(original,output){
  **/
 function loadComposite(original, secondOne, output){
        // YOUR CODE GOES HERE
+       //console.log(secondOne);
+      for(var i=0; i < original.length; i++)
+      {
+        //sum up the colors. Since the 2nd image is transparent, the alpha value does not matter, since its 0
+        output[i] = original[i] + secondOne[i];
+        
+      }
+      return;
 }
