@@ -42,12 +42,20 @@
         var name = document.getElementById("name").value;
         var address = document.getElementById("address").value;
         var email = document.getElementById("email").value;
-
+        var age = Number(document.getElementById("age").value);
+        var date = Date().toString();
         // Step #2 - you will create a new data object
-        var personRecord=
+        var PersonRecord= function PersonRecord(name, addr, email, age, date)
         {
-            "name": name, "addr" :address, "email" : email
-        };
+            this.name = name;
+            this.addr = addr;
+            this.email = email;
+            this.age = age;
+            this.date = date;
+            //"name": name, "addr" :address, "email" : email
+        }
+        var personRecord = new PersonRecord(name, address, email, age, date);
+
         console.log(personRecord);
         // Step #3 - call on writeRowtoPage() to write your new data object to the page
         writeRowToPage(personRecord, document.getElementById("output"));
@@ -58,8 +66,16 @@
         //          that's already in there from prior submissions!)
         window.localStorage.setItem("personRecords", JSON.stringify(personRecords));
 
-    }
+    };
 
+    button = document.getElementById("clearit");
+    button.onclick = function()
+    {
+        //This function clears all the data in the localStorage
+        window.localStorage.clear();
+
+
+    };
     /* This function accepts two arguments -
      *    @dataObject: your data object representing a single
      *                 submission of the data form, which corresponds
@@ -90,8 +106,15 @@
         if (dataObject.email !== 'undefined') {
             s+=dataObject.email;
         }
+        s+= '</div><div class="ageDiv">';
+        if (dataObject.age !== 'undefined') {
+            s+=dataObject.age;
+        }
+        s+= '</div><div class="dateDiv">';
+        if (dataObject.date !== 'undefined') {
+            s+=dataObject.date;
+        }
         s+= '</div></div>';
-
         element.innerHTML += s;
     }
 
@@ -102,6 +125,22 @@
      * any time the user revisits this page, they'll see what was previously entered (provided
      * that they use the same browser on the same computer!)
      * */
-
+    window.onload = function()
+    {
+        var personRecordsStr = window.localStorage.getItem("personRecords");
+        var personRecords;
+        if (personRecordsStr == null)
+        {
+            console.log("person records don't exist");
+        }
+        else {
+            personRecords = JSON.parse(personRecordsStr);
+            console.log(personRecords);
+            for(var rindex in personRecords)
+            {
+                writeRowToPage(personRecords[rindex], document.getElementById("output"));
+            }
+        }
+    };
 
 })();
