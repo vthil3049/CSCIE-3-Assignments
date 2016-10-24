@@ -4,17 +4,35 @@
 // First we do a self-invoking function that contains everything - there will be nothing
 //  exposed to the global scope.
 (function(){
-    var personRecordsStr = window.localStorage.getItem("personRecords");
-    var personRecords;
-    if (personRecordsStr == null)
-    {
-        console.log("person records don't exist");
-        personRecords = [];
-        window.localStorage.setItem("personRecords", JSON.stringify(personRecords));
+
+   var personRecords;  //Global for all to access
+
+   //Helper functions for all event methods
+   function getPersonRecords()
+   {
+      var personRecordsStr = window.localStorage.getItem("personRecords");
+
+      if (personRecordsStr == null)
+      {
+          console.log("person records don't exist");
+          personRecords = [];
+          window.localStorage.setItem("personRecords", JSON.stringify(personRecords));
+      }
+      else {
+          personRecords = JSON.parse(personRecordsStr);
+          console.log(personRecords);
+      }
     }
-    else {
-        personRecords = JSON.parse(personRecordsStr);
-        console.log(personRecords);
+
+    //Write out the person records to the proper output area
+    function outputPersonRecords()
+    {
+      console.log(personRecords);
+      var elem = document.getElementById("output");
+      for(var rindex in personRecords)
+      {
+          writeRowToPage(personRecords[rindex], elem);
+      }
     }
 
     var button = document.getElementById("doit");
@@ -43,7 +61,8 @@
         var address = document.getElementById("address").value;
         var email = document.getElementById("email").value;
         var age = Number(document.getElementById("age").value);
-        var date = Date().toString();
+        var date = Date().toString();   //Save the current date when this entry was logged
+
         // Step #2 - you will create a new data object
         var PersonRecord= function PersonRecord(name, addr, email, age, date)
         {
@@ -61,7 +80,6 @@
         writeRowToPage(personRecord, document.getElementById("output"));
         personRecords.push(personRecord);
 
-
         // Step#4 - Store your object in localStorage (preserving data
         //          that's already in there from prior submissions!)
         window.localStorage.setItem("personRecords", JSON.stringify(personRecords));
@@ -71,11 +89,45 @@
     button = document.getElementById("clearit");
     button.onclick = function()
     {
-        //This function clears all the data in the localStorage
+        //This function clears all the data in the localStorage, the output area and the elements
         window.localStorage.clear();
+        var elem = document.getElementById("output");
+        var heading= elem.getElementsByClassName("info infoHead")[0];
+        heading = elem.removeChild(heading);
 
+        while (elem.hasChildNodes())
+          elem.removeChild(elem.lastChild);
+
+        elem.appendChild(heading);
+
+        //remove any data in the fields
+        document.getElementById("name").value="";
+        document.getElementById("address").value="";
+        document.getElementById("email").value="";
+        document.getElementById("age").value="";
+
+        //Delete all the data nodes
+          // console.log(childList);
+        // var numChildren = childList.length;
+        // for(var i=0; i < numChildren; i++)
+        // {
+        //   console.log(childList[i]);
+        //   var parentElement = childList[i].parentElement;
+        //   parentElement.removeChild(childList[i]);
+        // }
+
+        // var childList = elem.getElementsByClassName("info data");
+        // var numChildren=childList.length;
+        // console.log(numChildren);
+        // for(var i=0; i < numChildren; i++)
+        // {
+        //   console.log(childList[i]);
+        //   var parentElement = childList[i].parentElement;
+        //   parentElement.removeChild(childList[i]);
+        // }
 
     };
+
     /* This function accepts two arguments -
      *    @dataObject: your data object representing a single
      *                 submission of the data form, which corresponds
@@ -92,7 +144,7 @@
      *
      * */
     function writeRowToPage(dataObject, element) {
-        var s = "<div class=\"info\">";
+        var s = "<div class=\"info data\">";
 
         s+='<div class="nameDiv">';
         if (dataObject.name !== 'undefined') {
@@ -127,20 +179,21 @@
      * */
     window.onload = function()
     {
-        var personRecordsStr = window.localStorage.getItem("personRecords");
-        var personRecords;
-        if (personRecordsStr == null)
-        {
-            console.log("person records don't exist");
-        }
-        else {
-            personRecords = JSON.parse(personRecordsStr);
-            console.log(personRecords);
-            for(var rindex in personRecords)
-            {
-                writeRowToPage(personRecords[rindex], document.getElementById("output"));
-            }
-        }
+
+        getPersonRecords();
+        outputPersonRecords();
+        // if (personRecordsStr == null)
+        // {
+        //     console.log("person records don't exist");
+        // }
+        // else {
+        //     personRecords = JSON.parse(personRecordsStr);
+        //     console.log(personRecords);
+        //     for(var rindex in personRecords)
+        //     {
+        //         writeRowToPage(personRecords[rindex], document.getElementById("output"));
+        //     }
+        // }
     };
 
 })();
