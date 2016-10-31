@@ -1,0 +1,14 @@
+img {
+  float:left;
+  clear:both;
+  margin: 0 1em 1em 0;
+}
+
+.title {
+  color:blue;
+}
+
+body {
+  width:95%;
+  margin:auto;
+}
