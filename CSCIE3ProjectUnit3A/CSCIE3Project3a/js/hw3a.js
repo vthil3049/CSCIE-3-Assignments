@@ -1,39 +1,44 @@
 /* hw3a.js  */
 
-// your solution here
-document.addEventListener("click", function(evt){
- //the target is the actual child element that was clicked. Check to make sure its only the buttons and not any area in the container
-	if (evt.target.id == 'divideTranscript'){
-    var elem =  document.getElementById("transcriptText");
-    var inputString =elem.innerHTML.trim();
+//Transform the text to insert span tags to the words
+function transform() {
+    var pDivElem = document.getElementById("transcriptText");
+    //Remove the empty word elements
+    var inputString = pDivElem.innerHTML.trim();
     //console.log(inputString);
     var outputArray = inputString.split(/\s+/);
+    var count = outputArray.length;
     //console.log(outputArray);
-    if (outputArray.length > 0 )
-    {
-      //clear the current inner HTML
-      elem.innerHTML = "";
-      outputArray.forEach(function(arrElem, index){
-        var parentE =  document.getElementById("transcriptText");
-        var spanEl = document.createElement('span');
-        spanEl.setAttribute('class','word' );
-        spanEl.setAttribute('id', 'word'+index.toString(10));
-        spanEl.innerHTML=arrElem+" ";
-        parentE.appendChild(spanEl);
-      });
-      console.log(elem.innerHTML);
-      elem.addEventListener("mouseover", function(e){
-        if (e.target.getAttribute('class')=='word'){
-          e.target.style.backgroundColor = 'yellow';
-        }
-      });
-      elem.addEventListener("mouseout", function(e){
-        if (e.target.getAttribute('class')=='word'){
-          e.target.style.backgroundColor = 'white';
-        }
-      });
-    }
+    if (count > 0) {
+        //clear the current inner HTML
+        pDivElem.innerHTML = "";
+        for (var i = 0; i < count; i++) {
+            var spanEl = document.createElement('span');
+            spanEl.setAttribute('class', 'word');
+            spanEl.setAttribute('id', 'word' + i.toString(10));
+            spanEl.innerHTML = outputArray[i];
+            pDivElem.appendChild(spanEl);
+            //add the hover state style change on mouseover and mouseout for the word
+            spanEl.addEventListener("mouseover", function(e) {
+                e.target.style.backgroundColor = 'yellow';
+            });
+            spanEl.addEventListener("mouseout", function(e) {
+                e.target.style.backgroundColor = 'white';
+            });
+            //Add a space element with its own span
+            spanEl = document.createElement('span');
+            spanEl.innerHTML = " ";
+            pDivElem.appendChild(spanEl);
+        }  //for every word from the original text
+    }//If number words > 0
 
-  }
+	//Disable future transformations for this text
+	var divideBtn = document.getElementById('divideTranscript');
+	divideBtn.innerHTML = "Transform complete";
+	divideBtn.disabled = true;
+} //end of transform()
 
-});
+window.onload = function() {
+    var divideBtn = document.getElementById('divideTranscript');
+    divideBtn.addEventListener('click', transform, false);
+}
