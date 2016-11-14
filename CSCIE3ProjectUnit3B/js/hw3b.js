@@ -1,4 +1,16 @@
 /* hw3b.js */
+function initMap() {
+  var uluru = {lat: -25.363, lng: 131.044};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+
 window.onload = function()
 {
     var pwd1 = document.getElementById("pwd1");
@@ -56,5 +68,74 @@ window.onload = function()
 
     });
 
-    
+    //console.log(continents[0]);
+    var firstSelect = document.getElementById("firstSelect");
+    var secondSelect = document.getElementById("secondSelect");
+
+    for (var continent in continents){
+      var opt     = document.createElement('option');
+      var txtNode = document.createTextNode(continent);
+      opt.value   = continent;
+      opt.appendChild(txtNode);
+      firstSelect.appendChild(opt);
+    }
+
+    //when continent changes update the countries
+    firstSelect.addEventListener('change', function() {
+        var indx = this.value;  //index is the name of the continent
+
+        clearSelectList(secondSelect);
+
+        if (indx != '') {
+                var len = continents[indx].length;
+                for (var i = 0; i < len; i++) {
+                    var opt     = document.createElement('option');
+                    var txtNode = document.createTextNode(continents[indx][i]);
+                    opt.appendChild(txtNode);
+                    secondSelect.appendChild(opt);
+                }
+            }
+
+    });
+    // function to clear Options from a Select Element
+    function clearSelectList(el) {
+        var MAX = el.length;
+        for (var i = MAX; i >= 0; i--) {
+            el.remove(i);
+        }
+    }
+
+    var showMap = document.getElementById("showMap");
+    showMap.addEventListener("change", function(){
+      if (showMap.checked)
+      {
+        var parent = showMap.parentElement;
+        var mapDiv = document.createElement('div');
+        mapDiv.setAttribute('id', 'map');
+        parent.appendChild(mapDiv);
+        // var txtNode = document.createTextNode("Map goes here");
+        // mapDiv.appendChild(txtNode);
+        var uluru = {lat: 42.3745, lng: -71.1215};
+        var map = new google.maps.Map(mapDiv, {
+          zoom: 16,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+
+      }
+      else
+      { //Remove the map
+        var mapDiv = document.getElementById("map");
+        if (mapDiv != null)
+        {
+          var parent = mapDiv.parentElement;
+          parent.removeChild(mapDiv);
+        }
+      }
+    });
+
+
 }

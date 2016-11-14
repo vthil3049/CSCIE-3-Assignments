@@ -38,3 +38,13 @@ h4 {
     text-shadow:1px 1px 0px #cd8a15;
     background-color:#f6b33d;
 }
+
+#firstSelect, #firstSelect option, #secondSelect, #secondSelect option {
+	width: 20em;
+}
+
+#map {
+	border: 2px solid navy;
+	height: 400px;
+	width: 100%;
+ }
