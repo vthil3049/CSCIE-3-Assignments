@@ -141,11 +141,11 @@ The other half was Unit 3 Project: Part B, previously distributed as a ZIP file.
           <input placeholder="Postal Code" name="zip" id="zip " type="text"><br>
           <br>
           Phone&nbsp;&nbsp;&nbsp; <br>
-          <input size="16" placeholder="Phone Number" id="phone" name="phone" pattern=""
-            type="text"><br>
+          <input size="16" placeholder="Phone Number" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            type="text"><br /><span class="hint" id="phoneHint">Phone number must be a 10 digit number in in either xxx-xxx-xxxx, (xxx)xxx-xxxx or xxxxxxxxxx form</span><br>
           <br>
           Email<br>
-          <input placeholder="Email address" name="email" type="email"><br>
+          <input placeholder="Email address" name="email" type="email" id="email"><br>
           <br>
           <button type="submit" id="submitBtn" name="submit">Register Me!</button><br>
           <legend>About You</legend></fieldset>
