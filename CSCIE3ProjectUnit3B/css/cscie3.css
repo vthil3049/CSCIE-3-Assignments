@@ -48,3 +48,7 @@ h4 {
 	height: 400px;
 	width: 100%;
  }
+
+ #state {
+	 text-transform : uppercase;
+ }

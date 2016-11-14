@@ -136,9 +136,9 @@ The other half was Unit 3 Project: Part B, previously distributed as a ZIP file.
           &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp; Postal Code<br>
           <input size="20" placeholder="Town or City" name="city" id="city" type="text">&nbsp;&nbsp;&nbsp;
-          <input size="10" placeholder="State/Province" name="state" id="state"
-            type="text">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-          <input placeholder="Postal Code" name="zip" id="zip " type="text"><br>
+          <input size="10" placeholder="State/Province" name="state" id="state" pattern="[a-zA-Z]{2}"
+            type="text" ><span id="stateHint" class="hint">2 letter province code</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+          <input placeholder="US Postal Code" name="zip" id="zip" type="text" pattern="[0-9]{5}"><span class="hint" id="zipHint"></span><br>
           <br>
           Phone&nbsp;&nbsp;&nbsp; <br>
           <input size="16" placeholder="Phone Number" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"

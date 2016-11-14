@@ -138,6 +138,46 @@ window.onload = function()
     }
   });
 
+  //validate the zip code to a 5 digit US zipcode
+  var state = document.getElementById("state");
+  var stateHint = document.getElementById("stateHint");
+  /*  This onchange handler will run every time you change the value of 'age' (even as you type).    */
+  state.addEventListener("input", function () {
+    // We check the element's 'validity' property,
+    if (this.validity.valid) {
+      // don't forget to clear hint if the input becomes valid!
+      stateHint.style.display="none";
+      stateHint.innerHTML = '';
+    }
+    else
+    {
+      console.log(this.validity);
+      stateHint.style.display="inline";
+    }
+
+  });
+  //validate the zip code to a 5 digit US zipcode
+  var zip = document.getElementById("zip");
+  var zipHint = document.getElementById("zipHint");
+  /*  This onchange handler will run every time you change the value of 'age' (even as you type).    */
+  zip.addEventListener("input", function () {
+    // We check the element's 'validity' property,
+    //  which will be 'valid' or some other value
+    //  (the specific kind of invalid depends on the constraint)
+
+    if (this.validity.valid) {
+      // don't forget to clear hint if the input becomes valid!
+      zipHint.style.display="none";
+      zipHint.innerHTML = '';
+    }
+    else {
+      console.log(this.validity);
+      zipHint.style.display="inline";
+      zipHint.innerHTML = 'Enter a 5 digit zipcode';
+    }
+
+  });
+
   //Validate phone number on entry
   //Found this here - https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s02.html
   var phone = document.getElementById("phone");
@@ -147,12 +187,12 @@ window.onload = function()
 
 
     if (phoneRegex.test(inStr)) {
-        var outStr = inStr.replace(phoneRegex, "$1-$2-$3");
-        console.log(inStr, outStr);
-        phone.value = outStr;
-        document.getElementById("phoneHint").style.display="none";
+      var outStr = inStr.replace(phoneRegex, "$1-$2-$3");
+      console.log(inStr, outStr);
+      phone.value = outStr;
+      document.getElementById("phoneHint").style.display="none";
     } else {
-        document.getElementById("phoneHint").style.display="inline";
+      document.getElementById("phoneHint").style.display="inline";
     }
 
   });
@@ -160,17 +200,17 @@ window.onload = function()
   var f = document.forms[0];
   f.addEventListener("submit", function (e) {
 
-      /// Here we can do whatever we want with the form
-      //    and its elements.
-      var phoneStr = document.getElementById("phone").value;
-      var emailStr = document.getElementById("email").value;
-      if (!phoneValid(phoneStr) &&  !emailValid(emailStr))
-      {
-        // if things aren't right, I can cancel the form
-        //  submission right here:
-        alert("Either a valid phone number or an email is required!");
-        e.preventDefault();
-      }
+    /// Here we can do whatever we want with the form
+    //    and its elements.
+    var phoneStr = document.getElementById("phone").value;
+    var emailStr = document.getElementById("email").value;
+    if (!phoneValid(phoneStr) &&  !emailValid(emailStr))
+    {
+      // if things aren't right, I can cancel the form
+      //  submission right here:
+      alert("Either a valid phone number or an email is required!");
+      e.preventDefault();
+    }
   });
 
   function phoneValid(pstr)
