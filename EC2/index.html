@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Forecast</title>
+  <meta name="weather" content="weather">
+  <link href="css/style.css" rel="stylesheet" />
+
+  <!--[if lt IE 9]>
+  <script src = "http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body onload="getWeather()">
+  <h1>Weather API from <a href="https://www.wunderground.com/">Weather Underground</a></h1>
+  <p>
+    The app demonstrates the use of a publicly available API .
+    We request data using the XMLHttpRequest object from Weather Underground.
+    We get a JSON response that is used to display the weather in a table.
+  </p>
+  <div id="weather_overall">
+    <h2>Forecast</h2>
+    <table id="forecast">
+      <thead>
+        <th>Day</th>
+        <th>
+          Condition
+        </th>
+        <th>
+          High
+        </th>
+        <th>
+          Low
+        </th>
+      </thead>
+      <tbody id="wdata">
+
+      </tbody>
+    </table>
+    <h2>Weather Data provided by Weather Underground<img id="logo" src="https://icons.wxug.com/logos/JPG/wundergroundLogo_4c.jpg" alt='Weather Underground Logo' /></h2>
+  </div>
+
+  <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+</html>
