@@ -22,14 +22,41 @@
         Here is a link to the <a href="http://www.businessinsider.com/pnc-christmas-index-12-days-of-christmas-2015-2015-12">Christmas Price Index of 2015</a>
       </p>
       <p>
-        For this problem, the user enters a number between 1-12(both numbers inclusive) and the program calculates the cost of the gift for that day, as well as the cumulative total spent by the poor sap until that specific day.
-      </p>
-      <p><input size="10" id="dayNumber"> Enter the Day number</p>
+        For this problem, the user enters a number between 1-12(both numbers inclusive) or clicks on one of the image buttons in the table below.<br />
+        When the 'Calculate Damage' button is clicked the program calculates the cost of the gift for that day, as well as the cumulative total spent by the poor sap until that specific day.<br />
+    </p>
+    <p>
+    <strong>
+        The table is populated dynamically at load time, using the DOM API calls. <br />
+        There is a single event handler for the entire table and it handles the click event for all the buttons in the table.
+    </strong>
+    </p>
+      <p><input size="10" id="dayNumber"> Enter the Day number or click on an image below</p>
       <button type="button" id="calcButton" onclick="calculateCostSolution()">Calculate the damage</button>
       <br>
-      <img src="images\1024px-XRF_12days.jpg" alt="12 days" /><textarea rows="14" cols="100" id="costBox">
+
+      <table id='gift_table'>
+          <thead>
+              <tr>
+                  <th>
+                      Item name
+                  </th>
+                  <th>
+                      Picture
+                  </th>
+                  <th>
+                      Cost
+                  </th>
+              </tr>
+          </thead>
+          <tbody id="gifts">
+
+          </tbody>
+      </table>
+      <textarea rows="14" cols="50" id="costBox">
 
       </textarea>
+
     </div>
     <script type="text/javascript" src="script.js"></script>
   </body>

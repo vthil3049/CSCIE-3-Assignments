@@ -4,10 +4,12 @@ body {
 	font-size: 14px;
 	line-height: 1.428571429;
 	color: #333;
+
 }
 .container {
 	width: 80%;
 	margin: auto;
+	background-color: aliceblue;
 }
 
 h4 {

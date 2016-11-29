@@ -21,18 +21,18 @@ For this problem, the user enters a number between 1-12(both numbers inclusive) 
 */
 var itemCosts = [
 
-  {"name": "Partridge in a pear tree", "cost":214.99 },
-  {"name": "Turtle Doves", "cost":290.00 },
-  {"name": "French Hens", "cost":181.50 },
-  {"name": "Calling Birds", "cost":599.96 },
-  {"name": "Gold Rings", "cost": 750.00},
-  {"name": "Geese-a-laying", "cost": 360.00},
-  {"name": "Swans a swimming", "cost": 13125.00},
-  {"name": "Maids a milking", "cost": 58.00},
-  {"name": "Ladies Dancing", "cost": 7552.84},
-  {"name": "Lords a leaping", "cost": 5508.70},
-  {"name": "Pipers piping", "cost":2635.20 },
-  {"name": "Drummers drumming", "cost":2854.80 }
+  {"name": "Partridge in a pear tree", "cost":214.99, "image": "images/Day1.png" },
+  {"name": "Turtle Doves", "cost":290.00, "image": "images/Day2.png" },
+  {"name": "French Hens", "cost":181.50, "image": "images/Day3.png" },
+  {"name": "Calling Birds", "cost":599.96, "image": "images/Day4.png" },
+  {"name": "Gold Rings", "cost": 750.00, "image": "images/Day5.png"},
+  {"name": "Geese-a-laying", "cost": 360.00, "image": "images/Day6.png"},
+  {"name": "Swans a swimming", "cost": 13125.00, "image": "images/Day7.png"},
+  {"name": "Maids a milking", "cost": 58.00, "image": "images/Day8.png"},
+  {"name": "Ladies Dancing", "cost": 7552.84, "image": "images/Day9.png"},
+  {"name": "Lords a leaping", "cost": 5508.70, "image": "images/Day10.png"},
+  {"name": "Pipers piping", "cost":2635.20 , "image": "images/Day11.png"},
+  {"name": "Drummers drumming", "cost":2854.80, "image": "images/Day12.png" }
 
 ];
 
@@ -86,3 +86,57 @@ function calculateCostSolution()
   }
 }
 
+window.onload = function()
+{
+    //console.log("onload");
+    var tbody = document.getElementById("gifts");
+    var numGifts = itemCosts.length;
+
+    for (var i=0; i< numGifts; i++)
+    {
+        var row = document.createElement('tr');
+        //Add the item name
+        var td = document.createElement('td');
+        var txtNode = document.createTextNode(itemCosts[i].name);
+        td.appendChild(txtNode);
+        row.appendChild(td);
+
+        //Add an image
+        td = document.createElement('td');
+        var btn = document.createElement("input");
+        btn.src = itemCosts[i].image;
+        btn.type = "image";
+        btn.setAttribute('class', 'imgbutton');
+        btn.setAttribute('id', 'day'+(i+1).toString());
+        td.appendChild(btn);
+        //var imgNode = document.createElement('img');
+        //imgNode.setAttribute('src', itemCosts[i].image);
+        //imgNode.setAttribute('alt', itemCosts[i].name);
+        //td.appendChild(imgNode);
+        row.appendChild(td);
+
+        //Add the cost
+        td = document.createElement('td');
+        txtNode = document.createTextNode('$'+itemCosts[i].cost);
+        td.appendChild(txtNode);
+        row.appendChild(td);
+
+        tbody.appendChild(row);
+    }
+
+    //This event listener works for all items in the table.
+    document.getElementById("gift_table").addEventListener("click", function(evt){
+        //console.log(evt.target.id);
+        var daynumber = -1;
+        if (evt.target.id && evt.target.id.startsWith('day'))
+        {
+            dayStr = evt.target.id.substring(3);
+            daynumber = parseInt(dayStr);
+            document.getElementById("dayNumber").value = daynumber;
+            //console.log(daynumber);
+        }
+
+    }, false);
+
+
+}
