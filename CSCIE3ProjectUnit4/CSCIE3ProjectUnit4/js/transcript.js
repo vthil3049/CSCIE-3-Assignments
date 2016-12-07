@@ -140,6 +140,15 @@
 
         });
 
+        player.onComplete(function(evt){
+            if (currIndex != -1)
+            {
+                console.log(transcriptElements[currIndex]);
+                $(transcriptElements[currIndex]).removeClass('hilite');
+                currIndex = -1;
+            }
+        });
+
         /*
          * Here we attach a click handler to each HTML object that jQuery has provided to us
          * The handler will be a function that calls player.seek(), passing the
