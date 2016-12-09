@@ -55,7 +55,8 @@
         //  assign it to a local variable so we have access to it
         //  from other functions and handlers inside this plugin.
         var transcriptElements = this;
-        //console.log(transcriptElements);
+
+        //To start with we are not assuming which segment is playing
         var currIndex = -1;
 
         // Here we define our function that will run every time the player
@@ -79,7 +80,7 @@
                   *
                   * */
                 var time =  evt.position; //YOUR CODE TO ADD #2 - replace the empty quotes with your code
-                //console.log(time);       // see if it's working
+                console.log(time);       // see if it's working
 
 
                 /*  Next you need to iterate over the transcriptElements (using a 'for' loop or
@@ -110,8 +111,10 @@
 
                 // YOUR for() loop or transcriptElements.each() goes here...
                 //console.log(transcriptElements);
+                // YOUR CODE TO ADD #3
                 jQuery.each(transcriptElements, function(index, item) {
                     //console.log(index, item);
+                      // do something with `item` (or `this` is also `item` if you like)
                     var startTime = parseFloat($(this).attr('data-start'));
                     var duration = parseFloat($(this).attr('data-dur'));
                     if ((time >= startTime) && (time <= (startTime + duration)))
@@ -126,17 +129,16 @@
                             }
 
                             currIndex = index;
-                            console.log('Found new index ', index);
+                            //console.log('Found new index ', index);
                             $(this).addClass( 'hilite');
+                            return this;
                         }
                     }
-
-                    // do something with `item` (or `this` is also `item` if you like)
                 });
-
-
-                // YOUR CODE TO ADD #3
-
+                //Detect going past or before the start of any subtitles
+                var startOfAudio = parseFloat($(transcriptElements[0]).attr('data-start'));
+                var endOfAudio = parseFloat($(transcriptElements[0]).attr('data-start'));
+                console.log(startOfAudio);
 
         });
 
@@ -147,6 +149,7 @@
                 $(transcriptElements[currIndex]).removeClass('hilite');
                 currIndex = -1;
             }
+
         });
 
         /*
@@ -161,7 +164,11 @@
                 // YOUR CODE TO ADD #4
                 //   Get the value of the data-start attribute (the jQuery .attr() function could help here)
                 //   and call player.seek([your value goes here])
-
+                //console.log(this);
+                var durationStart = parseFloat($(this).attr('data-start'));
+                console.log(durationStart);
+                player.seek(durationStart);
+                return this;
 
        });
    };
