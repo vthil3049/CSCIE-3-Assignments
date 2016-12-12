@@ -80,8 +80,13 @@
                   *
                   * */
                 var time =  evt.position; //YOUR CODE TO ADD #2 - replace the empty quotes with your code
-                console.log(time);       // see if it's working
+                //console.log(time);       // see if it's working
 
+                //Detect going past or before the start of any voice or subtitles
+                var startOfAudio = parseFloat($(transcriptElements[0]).attr('data-start'));
+                var nTranscripts = transcriptElements.length;
+                var endOfAudio = parseFloat($(transcriptElements[nTranscripts-1]).attr('data-start'));
+                endOfAudio += parseFloat($(transcriptElements[nTranscripts-1]).attr('data-dur'));
 
                 /*  Next you need to iterate over the transcriptElements (using a 'for' loop or
                  *   transcriptElements.each()), and for each one, see if the 'time' is greater
@@ -115,6 +120,19 @@
                 jQuery.each(transcriptElements, function(index, item) {
                     //console.log(index, item);
                       // do something with `item` (or `this` is also `item` if you like)
+                      //If voice has not started or it has ended then do no hiliting
+                      if ((time <startOfAudio)  || (time > endOfAudio))
+                      {
+                          if (currIndex != -1)
+                          {
+                              console.log(transcriptElements[currIndex]);
+                              $(transcriptElements[currIndex]).removeClass('hilite');
+                              currIndex = -1;
+                          }
+                          return this;
+                      }
+
+                    //If this is within the voice range, then check where to hilite
                     var startTime = parseFloat($(this).attr('data-start'));
                     var duration = parseFloat($(this).attr('data-dur'));
                     if ((time >= startTime) && (time <= (startTime + duration)))
@@ -124,7 +142,7 @@
                             //Index is changing - remove the hilite
                             if (currIndex != -1)
                             {
-                                console.log(transcriptElements[currIndex]);
+                                //console.log(transcriptElements[currIndex]);
                                 $(transcriptElements[currIndex]).removeClass('hilite');
                             }
 
@@ -135,22 +153,20 @@
                         }
                     }
                 });
-                //Detect going past or before the start of any subtitles
-                var startOfAudio = parseFloat($(transcriptElements[0]).attr('data-start'));
-                var endOfAudio = parseFloat($(transcriptElements[0]).attr('data-start'));
-                console.log(startOfAudio);
+
+
 
         });
 
-        player.onComplete(function(evt){
-            if (currIndex != -1)
-            {
-                console.log(transcriptElements[currIndex]);
-                $(transcriptElements[currIndex]).removeClass('hilite');
-                currIndex = -1;
-            }
-
-        });
+        // player.onComplete(function(evt){
+        //     if (currIndex != -1)
+        //     {
+        //         console.log(transcriptElements[currIndex]);
+        //         $(transcriptElements[currIndex]).removeClass('hilite');
+        //         currIndex = -1;
+        //     }
+        //
+        // });
 
         /*
          * Here we attach a click handler to each HTML object that jQuery has provided to us
@@ -166,7 +182,7 @@
                 //   and call player.seek([your value goes here])
                 //console.log(this);
                 var durationStart = parseFloat($(this).attr('data-start'));
-                console.log(durationStart);
+                //console.log(durationStart);
                 player.seek(durationStart);
                 return this;
 
