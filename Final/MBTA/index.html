@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>MBTA API</title>
     <meta name="mbta" content="schedules">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
 
     <!--[if lt IE 9]>
@@ -12,34 +13,67 @@
     <![endif]-->
 </head>
 
-<body onload="getRoutes()">
-    <h1>MBTA transit information from <a href="http://realtime.mbta.com/portal">MBTA developer API</a></h1>
-    <p>
-        The app demonstrates the use of a publicly available API .
-        We request data using the XMLHttpRequest object from the MBTA api regarding the subway system.
-        We get a JSON response that is used to display the weather in a table.
-    </p>
-    <div id="subway_system">
-        <h2>Boston Subways</h2>
-        <table id="routes">
-            <thead>
-                <th>Index</th>
-                <th>
-                    Route Id
-                </th>
-                <th>
-                    Route name
-                </th>
-            </thead>
-            <tbody id="route_data">
+<body>
+    <div class="container">
+        <h1 class="text-center">T Information</h1>
+        <h2 class="text-center">MBTA transit information from <a href="http://realtime.mbta.com/portal">MBTA developer API</a></h2>
+        <p>
+            The app demonstrates the use of a publicly available API .
+            We request data using the XMLHttpRequest object from the MBTA api regarding the subway system.
+            We get a JSON response that is used to display the weather in a table.
+        </p>
+        <div class="col-md-4">
+            <div id="subway_system">
+                <h2 class="text-center">Boston Subways</h2>
+                <table id="routes">
+                    <thead>
+                        <th>Index</th>
+                        <th>
+                            Route name
+                        </th>
+                    </thead>
+                    <tbody id="route_data">
 
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div>
+                <h2 id='selected_route' class="text-center">No route selected</h2>
+            </div>
+            <div id="stops" class="col-md-6">
+                <table id="stops_forward">
+                    <h2 id="direction0">Direction</h2>
+                    <thead>
+                        <th>Index</th>
+                        <th>
+                            Stop name
+                        </th>
+                    </thead>
+                    <tbody id="route0_data">
 
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table id="stops_reverse">
+                    <h2 id="direction1">Direction</h2>
+                    <thead>
+                        <th>Index</th>
+                        <th>
+                            Stop name
+                        </th>
+                    </thead>
+                    <tbody id="route1_data">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div id="routes">
 
-    </div>
+
     <script
     src="https://code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="

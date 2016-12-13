@@ -1,8 +1,23 @@
 table, th, td {
    border: 1px solid black;
+
+}
+td .selected {
+     border: 3px solid black;
+     font-weight: bold;
+}
+
+table {
+       background-color: oldlace;
 }
 td {
   padding: 0 1em;
+}
+td a, td a:visited{
+    color: black;
+}
+td a:visited{
+    font-weight: bold;
 }
 
 img {
