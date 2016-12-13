@@ -1,0 +1,17 @@
+table, th, td {
+   border: 1px solid black;
+}
+td {
+  padding: 0 1em;
+}
+
+img {
+  display:block;
+  padding: 0 1em;
+}
+
+#logo {
+
+  width: 100px;
+  height: 100px;
+}
