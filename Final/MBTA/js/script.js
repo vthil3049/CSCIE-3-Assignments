@@ -11,7 +11,7 @@ $("document").ready(function() {
     var color_greenline = "limegreen";
     var color_default = "oldlace";
 
-    //Bind the submit function event handler
+    //Bind the submit function event handler for find by location
     $( "#find_stops" ).submit(function( event ) {
         //Find the stops based on the latitude and longitude values
         var latitude = parseFloat($("#latitude").val());
@@ -32,7 +32,8 @@ $("document").ready(function() {
             $("#longerror").text("");
         }
         console.log(latitude, longitude);
-        var stops = getStopsByLocation(latitude, longitude);
+        getStopsByLocation(latitude, longitude);
+
 
         event.preventDefault();
     });
@@ -49,14 +50,62 @@ $("document").ready(function() {
         httpStr += "&lon=";
         httpStr += longitude.toString();
         httpStr += "&format=json";
-        var jqxhr = $.get( httpStr)
-                    .done(function(result) {
-                        console.log(result);
+        console.log(httpStr);
+        var jqxhr = $.get(httpStr).done(function(result) {
+                        console.log("result=",result);
+                        var distance ="";
+                        $.each(result.stop, function(i, s){
+                            if (i==0)
+                            {
+                                //add the first closest stop
+                                distance = s.distance;
+                                addStop(s);
+                            }
+                            else if (distance != s.distance)
+                            {
+                                //If distance from the previous stop changes then add this stop, otherwise
+                                //ignore if its in the same distance/location
+                                distance = s.distance;
+                                addStop(s);
+                            }
+                            //Add the stop to the array
+                            function addStop(stop)
+                            {
+                                //console.log(stop);
+                                var newStop = {
+                                    name: stop.stop_name,
+                                    distance: stop.distance,
+                                    lat:stop.stop_lat,
+                                    lon:stop.stop_lon};
+
+                                stops.push(newStop);
+
+                            }
+                        });
+                        console.log(stops);
+                        if (stops.length > 0)
+                        {
+                            //Show the table and populate with the stops
+                            $("#nearest_stops").show();
+                            var tb = $("#nearest_stops tbody");
+                            $(tb).empty();
+
+                            $.each(stops, function(i, s){
+                                    var tr = $("<tr><td>"+s.name+"</td><td>"+s.distance.substring(0,6)+"</td></tr>");
+                                    $(tr).data("stop", s);
+                                    $(tb).append(tr);
+                            });
+                        }
+                        else {
+                            $("#nearest_stops").hide();
+                            alert("There were no T-stops close to this location");
+                        }
+
                     })
                     .fail(function(){
                         alert("http error on stops by location information");
                     }) ;
-        return stops;
+
     }
 
 
@@ -65,7 +114,7 @@ $("document").ready(function() {
         var routes = [];
         var jqxhr = $.get( "http://realtime.mbta.com/developer/api/v2/routes?api_key=Im5gTSzt1UyS3hWBjgb-XQ&format=json")
         .done(function(result) {
-
+            //collect the information about all subway routes
             $.each(result.mode,function(i, mode){
 
                 if (mode.mode_name == "Subway" )
@@ -77,7 +126,7 @@ $("document").ready(function() {
                 }
             });
 
-            //collect the information about all subway routes
+            //Add each of the routes information to the table
             $.each(routes, function(i,v)
             {
                 var td = $("<td></td>");
@@ -140,10 +189,10 @@ $("document").ready(function() {
                     else if (selRoute.indexOf("Orange") != -1){
                         routeColor = color_orangeline;
                     }
-                    $("#stops_forward").css("background-color", routeColor);
-                    $("#stops_forward").addClass("table-striped");
-                    $("#stops_reverse").css("background-color", routeColor);
-                    $("#stops_reverse").addClass("table-striped");
+                    // $("#stops_forward").css("background-color", routeColor);
+                    // $("#stops_forward").addClass("table-striped");
+                    // $("#stops_reverse").css("background-color", routeColor);
+                    // $("#stops_reverse").addClass("table-striped");
                     $("#selected_route").css("background-color", routeColor);
 
                 })
