@@ -22,7 +22,7 @@
             We request data using the XMLHttpRequest object from the MBTA api regarding the subway system.
             We get a JSON response that is used to display the routes in a table
         </p>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div id="subway_system">
                 <h2>Boston Subways</h2>
                 <h3>Click on a route name below to see the stops</h3>
@@ -48,8 +48,10 @@
                     <label for="longitude">Longitude</label>
                     <input type="text" name="longitude" id="longitude" value="-71.064648" required/><br />
                     <span id="longerror"></span><br />
+                    <button id="find_me">Find my coordinates</button>
                     <button type="submit">Find stops</button>
                 </form>
+                <br />
             </div>
             <div>
                 <table id="nearest_stops">
@@ -67,7 +69,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div>
                 <h2 id='selected_route' class="text-center">No route selected</h2>
             </div>
@@ -99,6 +101,7 @@
                     </tbody>
                 </table>
             </div>
+            <br />
             <div id="mapsection" class="col-md-12" >
                 <div id="map">
 
@@ -113,6 +116,9 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous">
     </script>
+    <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBl1Ll6WF6C5CtT3X7iOq5IihRR9PueVNw">
+</script>
     <script type="application/javascript" src="js/script.js"></script>
 </body>
 

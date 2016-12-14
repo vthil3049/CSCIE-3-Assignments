@@ -39,6 +39,11 @@ img {
 }
 
 /* Tables to be hidden at first */
-#stops_forward, #stops_reverse, #nearest_stops {
+#stops_forward, #stops_reverse, #nearest_stops, #map {
     display:none;
+}
+#map {
+    margin: 5px;
+    height: 200px;
+    border: 2px solid black;
 }

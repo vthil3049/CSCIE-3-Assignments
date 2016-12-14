@@ -10,104 +10,10 @@ $("document").ready(function() {
     var color_orangeline = 'orange';
     var color_greenline = "limegreen";
     var color_default = "oldlace";
+    var gmaps_api_key = "AIzaSyBl1Ll6WF6C5CtT3X7iOq5IihRR9PueVNw";
 
-    //Bind the submit function event handler for find by location
-    $( "#find_stops" ).submit(function( event ) {
-        //Find the stops based on the latitude and longitude values
-        var latitude = parseFloat($("#latitude").val());
-        if (isNaN(latitude))
-        {
-            $("#laterror").text("Not a valid number");
-        }
-        else {
-            $("#laterror").text("");
-        }
-
-        var longitude = parseFloat($("#longitude").val());
-        if (isNaN(longitude))
-        {
-            $("#longerror").text("Not a valid number");
-        }
-        else {
-            $("#longerror").text("");
-        }
-        console.log(latitude, longitude);
-        getStopsByLocation(latitude, longitude);
-
-
-        event.preventDefault();
-    });
-
-
-    //Get the basic subway route information.
+    //Get the basic subway route information. The rest is upto the user to control
     getRoutes();
-
-    function getStopsByLocation(latitude, longitude)
-    {
-        var stops = [];
-        var httpStr = "http://realtime.mbta.com/developer/api/v2/stopsbylocation?api_key=Im5gTSzt1UyS3hWBjgb-XQ&lat=";
-        httpStr += latitude.toString();
-        httpStr += "&lon=";
-        httpStr += longitude.toString();
-        httpStr += "&format=json";
-        console.log(httpStr);
-        var jqxhr = $.get(httpStr).done(function(result) {
-                        console.log("result=",result);
-                        var distance ="";
-                        $.each(result.stop, function(i, s){
-                            if (i==0)
-                            {
-                                //add the first closest stop
-                                distance = s.distance;
-                                addStop(s);
-                            }
-                            else if (distance != s.distance)
-                            {
-                                //If distance from the previous stop changes then add this stop, otherwise
-                                //ignore if its in the same distance/location
-                                distance = s.distance;
-                                addStop(s);
-                            }
-                            //Add the stop to the array
-                            function addStop(stop)
-                            {
-                                //console.log(stop);
-                                var newStop = {
-                                    name: stop.stop_name,
-                                    distance: stop.distance,
-                                    lat:stop.stop_lat,
-                                    lon:stop.stop_lon};
-
-                                stops.push(newStop);
-
-                            }
-                        });
-                        console.log(stops);
-                        if (stops.length > 0)
-                        {
-                            //Show the table and populate with the stops
-                            $("#nearest_stops").show();
-                            var tb = $("#nearest_stops tbody");
-                            $(tb).empty();
-
-                            $.each(stops, function(i, s){
-                                    var tr = $("<tr><td>"+s.name+"</td><td>"+s.distance.substring(0,6)+"</td></tr>");
-                                    $(tr).data("stop", s);
-                                    $(tb).append(tr);
-                            });
-                        }
-                        else {
-                            $("#nearest_stops").hide();
-                            alert("There were no T-stops close to this location");
-                        }
-
-                    })
-                    .fail(function(){
-                        alert("http error on stops by location information");
-                    }) ;
-
-    }
-
 
     function getRoutes()
     {
@@ -208,5 +114,121 @@ $("document").ready(function() {
             alert( "error. Check if your internet and wifi are on" );
         });
     }
-    //}
+
+    function getStopsByLocation(latitude, longitude)
+    {
+        var stops = [];
+        var httpStr = "http://realtime.mbta.com/developer/api/v2/stopsbylocation?api_key=Im5gTSzt1UyS3hWBjgb-XQ&lat=";
+        httpStr += latitude.toString();
+        httpStr += "&lon=";
+        httpStr += longitude.toString();
+        httpStr += "&format=json";
+        console.log(httpStr);
+        var jqxhr = $.get(httpStr).done(function(result) {
+                        console.log("result=",result);
+                        var distance ="";
+                        $.each(result.stop, function(i, s){
+                            if (i==0)
+                            {
+                                //add the first closest stop
+                                distance = s.distance;
+                                addStop(s);
+                            }
+                            else if (distance != s.distance)
+                            {
+                                //If distance from the previous stop changes then add this stop, otherwise
+                                //ignore if its in the same distance/location
+                                distance = s.distance;
+                                addStop(s);
+                            }
+                            //Add the stop to the array
+                            function addStop(stop)
+                            {
+                                //console.log(stop);
+                                var newStop = {
+                                    name: stop.stop_name,
+                                    distance: stop.distance,
+                                    lat:stop.stop_lat,
+                                    lon:stop.stop_lon};
+
+                                stops.push(newStop);
+
+                            }
+                        });
+                        console.log(stops);
+                        if (stops.length > 0)
+                        {
+                            //Show the table and populate with the stops
+                            $("#nearest_stops").show();
+                            var tb = $("#nearest_stops tbody");
+                            $(tb).empty();
+
+                            $.each(stops, function(i, s){
+                                    var tr = $("<tr><td>"+s.name+"</td><td>"+s.distance.substring(0,6)+"</td></tr>");
+                                    $(tr).data("stop", s);
+                                    $(tb).append(tr);
+                            });
+                        }
+                        else {
+                            $("#nearest_stops").hide();
+                            alert("There were no T-stops close to this location");
+                        }
+
+                    })
+                    .fail(function(){
+                        alert("http error on stops by location information");
+                    }) ;
+
+    }
+
+    //Bind the submit function event handler for find by location
+    $( "#find_stops" ).submit(function( event ) {
+        //Find the stops based on the latitude and longitude values
+        var latitude = parseFloat($("#latitude").val());
+        if (isNaN(latitude))
+        {
+            $("#laterror").text("Not a valid number");
+        }
+        else {
+            $("#laterror").text("");
+        }
+
+        var longitude = parseFloat($("#longitude").val());
+        if (isNaN(longitude))
+        {
+            $("#longerror").text("Not a valid number");
+        }
+        else {
+            $("#longerror").text("");
+        }
+        console.log(latitude, longitude);
+        getStopsByLocation(latitude, longitude);
+
+        event.preventDefault();
+    });
+
+    $( "#find_me" ).click(function() {
+        //This code was obtained from the Google maps API documentation
+        // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+              var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+
+              $("#latitude").val(position.coords.latitude);
+              $("#longitude").val(position.coords.longitude);
+              $("#nearest_stops").hide();
+          },
+          function() {
+            alert("Geolocation did not work");
+          });
+      }
+    });
+
+
 })
