@@ -20,11 +20,12 @@
         <p>
             The app demonstrates the use of a publicly available API .
             We request data using the XMLHttpRequest object from the MBTA api regarding the subway system.
-            We get a JSON response that is used to display the weather in a table.
+            We get a JSON response that is used to display the routes in a table
         </p>
         <div class="col-md-4">
             <div id="subway_system">
-                <h2 class="text-center">Boston Subways</h2>
+                <h2>Boston Subways</h2>
+                <h3>Click on a route name below to see the stops</h3>
                 <table id="routes">
                     <thead>
                         <th>Index</th>
@@ -36,6 +37,19 @@
 
                     </tbody>
                 </table>
+            </div>
+            <div>
+                <h2>Stops by location</h2>
+                <form id="find_stops" action="" name="location">
+                    <label for="latitude">Latitude</label>
+                    <input type="text" name="latitude" id="latitude" required /><br />
+                    <span id="laterror"></span><br />
+
+                    <label for="longitude">Longitude</label>
+                    <input type="text" name="longitude" id="longitude" required/><br />
+                    <span id="longerror"></span><br />
+                    <button type="submit">Find stops</button>
+                </form>
             </div>
         </div>
         <div class="col-md-8">

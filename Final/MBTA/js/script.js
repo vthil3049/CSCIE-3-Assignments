@@ -10,7 +10,54 @@ $("document").ready(function() {
     var color_orangeline = 'orange';
     var color_greenline = "limegreen";
 
-    getRoutes();  //First get the basic subway route information.
+    //Bind the submit function event handler
+    $( "#find_stops" ).submit(function( event ) {
+        //Find the stops based on the latitude and longitude values
+        var latitude = parseFloat($("#latitude").val());
+        if (isNaN(latitude))
+        {
+            $("#laterror").text("Not a valid number");
+        }
+        else {
+            $("#laterror").text("");
+        }
+
+        var longitude = parseFloat($("#longitude").val());
+        if (isNaN(longitude))
+        {
+            $("#longerror").text("Not a valid number");
+        }
+        else {
+            $("#longerror").text("");
+        }
+        console.log(latitude, longitude);
+        var stops = getStopsByLocation(latitude, longitude);
+
+        event.preventDefault();
+    });
+
+
+    //Get the basic subway route information.
+    getRoutes();
+
+    function getStopsByLocation(latitude, longitude)
+    {
+        var stops = [];
+        var httpStr = "http://realtime.mbta.com/developer/api/v2/stopsbylocation?api_key=Im5gTSzt1UyS3hWBjgb-XQ&lat=";
+        httpStr += latitude.toString();
+        httpStr += "&lon=";
+        httpStr += longitude.toString();
+        httpStr += "&format=json";
+        var jqxhr = $.get( httpStr)
+                    .done(function(result) {
+                        console.log(result);
+                    })
+                    .fail(function(){
+                        alert("http error on stops by location information");
+                    }) ;
+        return stops;
+    }
+
 
     function getRoutes()
     {
@@ -84,10 +131,6 @@ $("document").ready(function() {
         .fail(function() {
             alert( "error. Check if your internet and wifi are on" );
         });
-
-
     }
-
-
     //}
 })

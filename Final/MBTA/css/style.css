@@ -30,3 +30,7 @@ img {
   width: 100px;
   height: 100px;
 }
+
+#laterror, #longerror {
+    color: red;
+}
