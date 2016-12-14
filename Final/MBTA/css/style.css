@@ -1,3 +1,6 @@
+body {
+    background-color: aliceblue;
+}
 table, th, td {
    border: 1px solid black;
 
@@ -33,4 +36,8 @@ img {
 
 #laterror, #longerror {
     color: red;
+}
+
+#stops_forward, #stops_reverse {
+    display:none;
 }

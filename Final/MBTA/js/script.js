@@ -9,6 +9,7 @@ $("document").ready(function() {
     var color_blueline = "dodgerblue";
     var color_orangeline = 'orange';
     var color_greenline = "limegreen";
+    var color_default = "oldlace";
 
     //Bind the submit function event handler
     $( "#find_stops" ).submit(function( event ) {
@@ -98,9 +99,14 @@ $("document").ready(function() {
             //If a route is clicked then display its corresponding information
             $('.sroute').on('click', getRouteInfo);
 
+            //Get all the info about the stops for this route in both directions
             function getRouteInfo(evt) {
+                //make sure the tables are visible
+                $("#stops_forward").show();
+                    $("#stops_reverse").show();
                 console.log('Clicked on '+evt.target.id)    ;
-                $("#selected_route").text($(evt.target).text());
+                var selRoute = $(evt.target).text();
+                $("#selected_route").text(selRoute);
                 var httpStr = "http://realtime.mbta.com/developer/api/v2/stopsbyroute?api_key=Im5gTSzt1UyS3hWBjgb-XQ&route=";
                 httpStr += evt.target.id;
                 httpStr += "&format=json";
@@ -116,8 +122,29 @@ $("document").ready(function() {
                             var tr = $("<tr><td>"+(j+1).toString()+"</td><td>"+stop.stop_name+"</td></tr>");
                             $(tb).append(tr);
                         });
-
                     });
+                    //Color code according to the selected route
+                    var routeColor = color_default;
+                    if (selRoute.indexOf("Red") != -1)
+                    {
+                        routeColor = color_redline;
+                    }
+                    else if (selRoute.indexOf("Green") != -1)
+                    {
+                        routeColor = color_greenline;
+                    }
+                    else if (selRoute.indexOf("Blue") != -1)
+                    {
+                        routeColor = color_blueline;
+                    }
+                    else if (selRoute.indexOf("Orange") != -1){
+                        routeColor = color_orangeline;
+                    }
+                    $("#stops_forward").css("background-color", routeColor);
+                    $("#stops_forward").addClass("table-striped");
+                    $("#stops_reverse").css("background-color", routeColor);
+                    $("#stops_reverse").addClass("table-striped");
+                    $("#selected_route").css("background-color", routeColor);
 
                 })
                 .fail(function(){
