@@ -73,8 +73,12 @@ $("document").ready(function() {
                         $("#direction"+d.direction_id).text(d.direction_name);
                         var tb = $("#route"+d.direction_id+"_data");
                         $(tb).empty();
+
                         $.each(d.stop, function(j, stop){
+                            console.log(stop);
                             var tr = $("<tr><td>"+(j+1).toString()+"</td><td>"+stop.stop_name+"</td></tr>");
+                            $(tr).data("lat", stop.stop_lat);
+                            $(tr).data("lon", stop.stop_lon);
                             $(tb).append(tr);
                         });
                     });
@@ -100,6 +104,18 @@ $("document").ready(function() {
                     // $("#stops_reverse").css("background-color", routeColor);
                      $("#stops_reverse").addClass("table-striped");
                     $("#selected_route").css("background-color", routeColor);
+
+                    //add the dblClick handler
+                    $("#route0_data tr").dblclick(showInMap);
+                    $("#route1_data tr").dblclick(showInMap);
+
+                    function showInMap(){
+                        var lat = $(this).data("lat");
+                        var lon = $(this).data("lon");
+                        console.log(lat, lon);
+                        var murl = "https://www.google.com/maps?q="+lat+","+lon+"&z=17";
+                        window.open(murl);
+                    }
 
                 })
                 .fail(function(){
