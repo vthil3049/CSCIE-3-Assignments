@@ -96,9 +96,9 @@ $("document").ready(function() {
                         routeColor = color_orangeline;
                     }
                     // $("#stops_forward").css("background-color", routeColor);
-                    // $("#stops_forward").addClass("table-striped");
+                     $("#stops_forward").addClass("table-striped");
                     // $("#stops_reverse").css("background-color", routeColor);
-                    // $("#stops_reverse").addClass("table-striped");
+                     $("#stops_reverse").addClass("table-striped");
                     $("#selected_route").css("background-color", routeColor);
 
                 })
@@ -168,6 +168,13 @@ $("document").ready(function() {
                                     $(tr).data("stop", s);
                                     $(tb).append(tr);
                             });
+                            $("#nearest_stops tr").dblclick(function(){
+                                var stopData = $(this).data();
+                                console.log(stopData.stop.lat, stopData.stop.lon);
+                                var murl = "https://www.google.com/maps?q="+stopData.stop.lat+","+stopData.stop.lon+"&z=17";
+                                window.open(murl);
+                            });
+
                         }
                         else {
                             $("#nearest_stops").hide();

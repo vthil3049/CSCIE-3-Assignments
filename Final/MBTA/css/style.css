@@ -9,9 +9,17 @@ td .selected {
      border: 3px solid black;
      font-weight: bold;
 }
+th {
+    text-align: center;
+}
 
 table {
        background-color: oldlace;
+}
+
+table caption {
+    font-weight: bold;
+    color: black;
 }
 td {
   padding: 0 1em;
@@ -23,6 +31,10 @@ td a:visited{
     font-weight: bold;
 }
 
+.jumbotron {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
 img {
   display:block;
   padding: 0 1em;
