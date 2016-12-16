@@ -204,8 +204,42 @@ $("document").ready(function() {
 
     }
 
+    $("#latitude").keyup( function(){
+        if ($.isNumeric($(this).val()) )
+        {
+            var latitude = parseFloat($(this).val());
+            if ((latitude >= -90.0) && (latitude <= 90.0))
+            {
+                $("#laterror").text("");
+            }
+            else {
+                $("#laterror").text("Latitude has to be in the range -90.0 through 90.0");
+            }
+        }
+        else {
+            $("#laterror").text("Latitude has to be a number in the range -90.0 through 90.0");
+        }
+    });
+
+    $("#longitude").keyup(  function(){
+        if ($.isNumeric($(this).val()) )
+        {
+            var longitude = parseFloat($("#longitude").val());
+            if ((longitude >= -180.0) && (longitude <= 180.0))
+            {
+                $("#longerror").text("");
+            }
+            else {
+                $("#longerror").text("Longitude has to be in the range -180.0 through 180.0");
+            }
+        }
+        else {
+            $("#longerror").text("Longitude has to be a number in the range -180.0 through 180.0");
+        }
+    });
+
     //Bind the submit function event handler for find by location
-    $( "#find_stops" ).submit(function( event ) {
+    $( "#find_stops" ).click(function( event ) {
         //Find the stops based on the latitude and longitude values
         var latitude = parseFloat($("#latitude").val());
         if (isNaN(latitude))
@@ -252,6 +286,5 @@ $("document").ready(function() {
           });
       }
     });
-
 
 })
