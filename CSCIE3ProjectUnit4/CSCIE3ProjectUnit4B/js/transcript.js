@@ -91,7 +91,7 @@
                   *  in our HTML, and you will not need to use it.)
                   *
                   * */
-
+                
                 var time =  evt.position; //YOUR CODE TO ADD #2 - replace the empty quotes with your code
                 //console.log(time);       // see if it's working
 

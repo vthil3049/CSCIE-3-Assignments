@@ -1,0 +1,17 @@
+ 1482163282200
+transcript.js (line 57)
+1482163363983
+transcript.js (line 62)
+Interval is 81783
+
+ 1482163473949
+transcript.js (line 57)
+1482163555705
+transcript.js (line 62)
+Interval is 81756
+
+ 1482164040076
+transcript.js (line 57)
+1482164121840
+transcript.js (line 62)
+Interval is 81764
